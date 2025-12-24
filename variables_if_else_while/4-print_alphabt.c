@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-int main (void)
+int main(void)
 {
-	char c ='a';
+	char c = 'a';
 
 	while (c <= 'z')
 	{
@@ -14,4 +14,3 @@ int main (void)
 	
 	return (0);
 }
-
