@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+/**
+ * main - prints numbers
+ * Return: o if successful
 int main(void)
 
 {
