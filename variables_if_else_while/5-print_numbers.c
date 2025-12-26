@@ -2,7 +2,8 @@
 
 /**
  * main - prints numbers
- * Return: o if successful
+ * Return: o if successfu
+ */
 int main(void)
 
 {
