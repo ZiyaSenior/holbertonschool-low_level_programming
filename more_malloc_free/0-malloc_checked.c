@@ -2,19 +2,18 @@
 #include <stdlib.h>
 
 /**
- * malloc_checked - allocates memory using malloc
- * @b: number of bytes to allocate
+ * malloc_checked - checks malloc
+ * @b: parameter
  *
- * Return: pointer to allocated memory
- *         exits with status 98 if malloc fails
+ * Return: returns arr
  */
+
 void *malloc_checked(unsigned int b)
 {
-    void *ptr;
+	void *arr;
 
-    ptr = malloc(b);
-    if (ptr == NULL)
-        exit(98);
-
-    return (ptr);
+	arr = malloc(b);
+	if (arr == NULL)
+		exit(98);
+	return (arr);
 }
