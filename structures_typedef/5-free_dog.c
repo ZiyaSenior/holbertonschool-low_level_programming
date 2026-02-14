@@ -13,13 +13,11 @@ void free_dog(dog_t *d)
 	if (d == NULL)
 		return;
 
-	/* sərbəst burax name və owner */
 	if (d->name != NULL)
 		free(d->name);
 
 	if (d->owner != NULL)
 		free(d->owner);
 
-	/* sərbəst burax struct-un özünü */
 	free(d);
 } 
