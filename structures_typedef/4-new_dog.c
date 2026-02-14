@@ -1,59 +1,77 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "dog.h"
+#include <string.h>
+#include <stdlib.h>
 
 /**
- * new_dog - creates a new dog
- * @name: name of the dog
- * @age: age of the dog
- * @owner: owner of the dog
+ * _strcpy - copies string from src to dest
+ * @dest: destination
+ * @src: source
  *
- * Return: pointer to new dog, or NULL if failed
+ * Return: return destination
  */
+
+char *_strcpy(char *dest, char *src)
+{
+	int i = 0;
+
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+/**
+ * _strlen - length of string
+ * @s: string
+ *
+ * Return: length of string
+ */
+
+int _strlen(char *s)
+{
+	int len = 0;
+
+	while (s[len])
+		len++;
+	len--;
+	return (len);
+}
+
+/**
+ * new_dog - new instance of a dog
+ * @name: name of the new dog
+ * @age: age of the new dog
+ * @owner: owner of the new dog
+ *
+ * Return: pointer to new dog
+ */
+
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *d;
-	char *new_name, *new_owner;
+	char *temp_name, *temp_owner;
+	dog_t *new_puppy;
 
-	/* allocate memory for struct */
-	d = malloc(sizeof(dog_t));
-	if (d == NULL)
+	temp_name = malloc(sizeof(name) * (_strlen(name) + 1));
+	temp_owner = malloc(sizeof(owner) * (_strlen(owner) + 1));
+	new_puppy = malloc(sizeof(dog_t));
+
+	if (temp_name && temp_owner && new_puppy)
+	{
+		_strcpy(temp_name, name);
+		_strcpy(temp_owner, owner);
+		new_puppy->name = temp_name;
+		new_puppy->age = age;
+		new_puppy->owner = temp_owner;
+	}
+	else
+	{
+		free(temp_name);
+		free(temp_owner);
+		free(new_puppy);
 		return (NULL);
-
-	/* allocate and copy name */
-	if (name != NULL)
-	{
-		new_name = malloc(strlen(name) + 1);
-		if (new_name == NULL)
-		{
-			free(d);
-			return (NULL);
-		}
-		strcpy(new_name, name);
 	}
-	else
-		new_name = NULL;
-
-	/* allocate and copy owner */
-	if (owner != NULL)
-	{
-		new_owner = malloc(strlen(owner) + 1);
-		if (new_owner == NULL)
-		{
-			free(new_name);
-			free(d);
-			return (NULL);
-		}
-		strcpy(new_owner, owner);
-	}
-	else
-		new_owner = NULL;
-
-	/* fill the struct */
-	d->name = new_name;
-	d->age = age;
-	d->owner = new_owner;
-
-	return (d);
+	return (new_puppy);
 }
