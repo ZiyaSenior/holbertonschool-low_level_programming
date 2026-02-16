@@ -17,6 +17,7 @@ typedef struct print_form
 {
 	char *c;
 	void (*f)();
-}print_form_t;
+}
+print_form_t;
 
 #endif
