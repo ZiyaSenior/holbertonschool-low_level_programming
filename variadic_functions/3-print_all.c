@@ -1,45 +1,86 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include "variadic_functions.h"
 
 /**
- * print_all - prints anything
- * @format: list of types of arguments
- *
- * Return: nothing
+ * print_char - Prints char
+ * @args: aguments
  */
+
+void print_char(va_list args)
+{
+	printf("%c", va_arg(args, int));
+}
+
+/**
+ * print_string - Prints string
+ * @args: arguments
+ */
+
+void print_string(va_list args)
+{
+	char *string;
+
+	string = va_arg(args, char *);
+	if (string == NULL)
+		string = "(nil)";
+	printf("%s", string);
+}
+
+/**
+ * print_int - Prints integer
+ * @args: arguments
+ */
+
+void print_int(va_list args)
+{
+	printf("%d", va_arg(args, int));
+}
+
+/**
+ * print_float - Prints float
+ * @args: arguments
+ */
+
+void print_float(va_list args)
+{
+	printf("%f", va_arg(args, double));
+}
+
+/**
+ * print_all - Prints anything
+ * @format: list of types
+ */
+
 void print_all(const char * const format, ...)
 {
 	va_list args;
-	unsigned int i = 0;
-	int printed = 0;
-	char *str;
-
+	char *separator;
+	int i = 0, j;
+	print_form_t print_form[] = {
+		{"c", print_char},
+		{"i", print_int},
+		{"f", print_float},
+		{"s", print_string}
+	};
+	separator = "";
 	va_start(args, format);
-
-	while (format != NULL && format[i])
+	while (format != NULL && format[i] != '\0')
 	{
-		if (printed)
-			printf(", ");
-		if (format[i] == 'c')
-			printf("%c", va_arg(args, int));
-		if (format[i] == 'i')
-			printf("%d", va_arg(args, int));
-		if (format[i] == 'f')
-			printf("%f", va_arg(args, double));
-		if (format[i] == 's')
+		j = 0;
+		while (j < 4)
 		{
-			str = va_arg(args, char *);
-			if (str == NULL)
-				printf("(nil)");
-			else
-				printf("%s", str);
+			if (*print_form[j].c == format[i])
+			{
+				printf("%s", separator);
+				print_form[j].f(args, separator);
+				separator = ", ";
+			}
+			j++;
 		}
-		if (format[i] == 'c' || format[i] == 'i' || format[i] == 'f' || format[i] == 's')
-			printed = 1;
 		i++;
 	}
-
-	va_end(args);
 	printf("\n");
+	va_end(args);
 }
