@@ -4,39 +4,38 @@
 
 /**
  * hash_table_set - adds an element to the hash table
- * @ht: hash table
+ * @ht: pointer to the hash table
  * @key: key string
- * @value: value associated with key
+ * @value: value associated with the key
  *
- * Return: 1 if success, 0 if failed
+ * Return: 1 if success, 0 otherwise
  */
-
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	hash_node_t *new_node;
-	hash_node_t *temp;
+	hash_node_t *current;
 	unsigned long int index;
-	char *value_copy;
+	char *value_dup;
 
-	if (ht == NULL || key == NULL || *key == '\0')
+	if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
 		return (0);
 
 	index = key_index((const unsigned char *)key, ht->size);
-	temp = ht->array[index];
+	current = ht->array[index];
 
-	while (temp)
+	while (current)
 	{
-		if (strcmp(temp->key, key) == 0)
+		if (strcmp(current->key, key) == 0)
 		{
-			value_copy = strdup(value);
-			if (value_copy == NULL)
+			value_dup = strdup(value);
+			if (value_dup == NULL)
 				return (0);
 
-			free(temp->value);
-			temp->value = value_copy;
+			free(current->value);
+			current->value = value_dup;
 			return (1);
 		}
-		temp = temp->next;
+		current = current->next;
 	}
 
 	new_node = malloc(sizeof(hash_node_t));
